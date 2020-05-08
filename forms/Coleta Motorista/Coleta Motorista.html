@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+	<meta name="viewport" content="initial-scale=1.0">
+	<meta charset="utf-8">
+	<link type="text/css" rel="stylesheet" href="/portal/resources/style-guide/css/fluig-style-guide.min.css" />
+	<script type="text/javascript" src="/portal/resources/js/jquery/jquery.js"></script>
+	<script type="text/javascript" src="/portal/resources/js/jquery/jquery-ui.min.js"></script>
+	<script type="text/javascript" src="/portal/resources/js/mustache/mustache-min.js"></script>
+	<script type="text/javascript" src="/portal/resources/style-guide/js/fluig-style-guide.min.js"
+		charset="utf-8"></script>
+
+	<!-- CSS AQUI -->
+	<link rel="stylesheet" type="text/css" href="/fluig_trp_utils/resources/css/fluig_trp_utils.css" />
+
+	<link rel="stylesheet" type="text/css" href="/fluig_trp_utils/resources/css/jquery.dataTables.min.css" />
+	<link rel="stylesheet" type="text/css" href="/fluig_trp_utils/resources/css/responsive.dataTables.min.css" />
+	<style>
+		.col-principal {
+			padding: 0 !important;
+			/* margin: 0; */
+		}
+	</style>
+
+</head>
+
+<body onload="carregaPagina()">
+	<div class="fluig-style-guide" style="margin-bottom: 100px">
+		<form name="createFormComponents" id="createFormComponents" class="create-form-components" role="form">
+
+			<input type="hidden" id="WKUser" name="WKUser" />
+			<input type="hidden" id="WKMobile" name="WKMobile" />
+			<input type="hidden" id="WKNumState" name="WKNumState" />
+			<input type="hidden" id="WKNumProces" name="WKNumProces" />
+			<input type="hidden" id="MOD_" name="MOD_" />
+			<input type="hidden" id="docId" name="docId" />
+
+			<div class="container-fluid" id="dados">
+				<ul class="nav nav-tabs nav-ellipsis" role="tablist">
+					<li class="active" style="width: 25%">
+						<a href="#dados_coleta" role="tab" data-toggle="tab">
+							<span class="fluigicon fluigicon-files"></span> Dados da Coleta
+						</a>
+					</li>
+					<li style="width: 25%">
+						<a href="#roteiros_coleta" role="tab" data-toggle="tab">
+							<span class="fluigicon fluigicon-tree-view"></span> Roteiros
+						</a>
+					</li>
+					<li style="width: 25%">
+						<a href="#propriedades_coleta" role="tab" data-toggle="tab">
+							<span class="fluigicon fluigicon-tree-view"></span> Propriedades
+						</a>
+					</li>
+					<li style="width: 25%">
+						<a href="#fornecedores_coleta" role="tab" data-toggle="tab">
+							<span class="fluigicon fluigicon-tree-view"></span> Fornecedores
+						</a>
+					</li>
+				</ul>
+
+				<div class="tab-content">
+					<div class="tab-pane active" id="dados_coleta">
+						<div class="panel panel-default">
+							<div class="panel-body">
+								<table class="table table-striped" tablename="roteirosTable" noaddbutton=false
+									nodeletebutton=true addbuttonlabel="Adicionar Roteiro"
+									addbuttonclass="btn btn-info">
+									<thead>
+										<tr>
+											<th></th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td>
+												<div class="row">
+													<div class="switch switch-primary">
+														<input class="switch-input" type="checkbox" id="switch1"
+															name="switch1" />
+														<label class="switch-button" for="switch1">Toggle</label>
+													</div>
+													<div class="switch switch-success">
+														<input class="switch-input" type="checkbox" id="switch2"
+															name="switch2" />
+														<label class="switch-button" for="switch2">Toggle</label>
+													</div>
+													<div class="switch switch-info">
+														<input class="switch-input" type="checkbox" id="switch3"
+															name="switch3" />
+														<label class="switch-button" for="switch3">Toggle</label>
+													</div>
+													<div class="switch switch-warning">
+														<input class="switch-input" type="checkbox" id="switch4"
+															name="switch4" />
+														<label class="switch-button" for="switch4">Toggle</label>
+													</div>
+													<div class="switch switch-danger">
+														<input class="switch-input" type="checkbox" id="switch5"
+															name="switch5" />
+														<label class="switch-button" for="switch5">Toggle</label>
+													</div>
+												</div>
+												<div class="row">
+													<div class="switch switch-primary switch-labels">
+														<input class="switch-input" type="checkbox" id="switch6"
+															name="switch6" />
+														<label class="switch-button" for="switch6">Toggle</label>
+													</div>
+													<div class="switch switch-success switch-labels">
+														<input class="switch-input" type="checkbox" id="switch7"
+															name="switch7" />
+														<label class="switch-button" for="switch7">Toggle</label>
+													</div>
+													<div class="switch switch-info switch-labels">
+														<input class="switch-input" type="checkbox" id="switch8"
+															name="switch8" />
+														<label class="switch-button" for="switch8">Toggle</label>
+													</div>
+													<div class="switch switch-warning switch-labels">
+														<input class="switch-input" type="checkbox" id="switch9"
+															name="switch9" />
+														<label class="switch-button" for="switch9">Toggle</label>
+													</div>
+													<div class="switch switch-danger switch-labels">
+														<input class="switch-input" type="checkbox" id="switch10"
+															name="switch10" />
+														<label class="switch-button" for="switch10">Toggle</label>
+													</div>
+													<div class="custom-checkbox-primary"></div>
+													<!-- <div class="custom-checkbox custom-checkbox-primary"> -->
+														<input type="checkbox" id="testeCheckbox" name="testeCheckbox" readonly >
+														<label for="checkbox-1">Primary</label>
+													</div>
+												</div>
+												<!-- <div class="row">
+															<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 form-group">
+																<label for="pedra_mat_constr_for" class="control-label" style="display:block">Pedras
+																	/
+																	Material de Construção</label>
+																<input type="checkbox" data-on-text="Sim" data-off-text="Não" id="pedra_mat_constr_for" value=""
+																	name="pedra_mat_constr_for" class="form-control" />
+															</div>
+														</div> -->
+											</td>
+										</tr>
+									</tbody>
+								</table>
+
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="tab-content">
+					<div class="tab-pane active" id="roteiros_coleta">
+						<div class="panel panel-default">
+							<div class="panel-body">
+								<div class="telas tela7">
+									<h4>Tela 7 - Contaminações Encontradas
+									</h4>
+									<div class="row">
+										<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 form-group">
+											<label for="folha_galho_semente_for" class="control-label"
+												style="display:block">Folhas
+												/
+												galhos / sementes?</label>
+											<input type="checkbox" data-on-text="Sim" data-off-text="Não"
+												id="folha_galho_semente_for" value="" name="folha_galho_semente_for"
+												class="form-control" />
+										</div>
+										<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 form-group">
+											<label for="terra_arreia_for" class="control-label"
+												style="display:block">Terra
+												/
+												Areia?</label>
+											<input type="checkbox" data-on-text="Sim" data-off-text="Não"
+												id="terra_arreia_for" value="" name="terra_arreia_for"
+												class="form-control" />
+										</div>
+										<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 form-group">
+											<label for="plastico_caixa_copos_for" class="control-label"
+												style="display:block">Plásticos
+												(Caixa / Copos)?</label>
+											<input type="checkbox" data-on-text="Sim" data-off-text="Não"
+												id="plastico_caixa_copos_for" value="" name="plastico_caixa_copos_for"
+												class="form-control" />
+										</div>
+										<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 form-group">
+											<label for="borracha_luva_elastico_for" class="control-label"
+												style="display:block">Borracha
+												(Luva / Elásticos)?</label>
+											<input type="checkbox" data-on-text="Sim" data-off-text="Não"
+												id="borracha_luva_elastico_for" value=""
+												name="borracha_luva_elastico_for" class="form-control" />
+										</div>
+										<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 form-group">
+											<label for="fibras_nylo_cord_tec_for" class="control-label"
+												style="display:block">Fibras
+												(Nylon / Cordas / Tecidos)?</label>
+											<input type="checkbox" data-on-text="Sim" data-off-text="Não"
+												id="fibras_nylo_cord_tec_for" value="" name="fibras_nylo_cord_tec_for"
+												class="form-control" />
+										</div>
+										<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 form-group">
+											<label for="metais_for" class="control-label"
+												style="display:block">Metais</label>
+											<input type="checkbox" data-on-text="Sim" data-off-text="Não"
+												id="metais_for" value="" name="metais_for" class="form-control" />
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 form-group">
+											<label for="pedra_mat_constr_for" class="control-label"
+												style="display:block">Pedras
+												/
+												Material de Construção</label>
+											<input type="checkbox" data-on-text="Sim" data-off-text="Não"
+												id="pedra_mat_constr_for" value="" name="pedra_mat_constr_for"
+												class="form-control" />
+										</div>
+										<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 form-group">
+											<label for="cern_fitil_for" class="control-label"
+												style="display:block">Cernambi
+												rama /
+												Fitilhos?</label>
+											<input type="checkbox" data-on-text="Sim" data-off-text="Não"
+												id="cern_fitil_for" value="" name="cern_fitil_for"
+												class="form-control" />
+										</div>
+										<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 form-group">
+											<label for="latex_coag_tamb_for" class="control-label"
+												style="display:block">Látex
+												Coagulados em tambores?</label>
+											<input type="checkbox" data-on-text="Sim" data-off-text="Não"
+												id="latex_coag_tamb_for" value="" name="latex_coag_tamb_for"
+												class="form-control" />
+										</div>
+										<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 form-group">
+											<label for="outros_for" style="display:block">Outros?</label>
+											<input type="checkbox" data-on-text="Sim" data-off-text="Não"
+												id="outros_for" value="" name="outros_for" />
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</form>
+	</div>
+
+	<!-- JS AQUI -->
+	<script type="text/javascript" src="/webdesk/vcXMLRPC.js"></script>
+
+	<script type="text/javascript" src="/fluig_trp_utils/resources/js/autoNumeric.js"></script>
+
+	<script type="text/javascript" src="/fluig_trp_utils/resources/js/jquery.dataTables.min.js"></script>
+	<script type="text/javascript" src="/fluig_trp_utils/resources/js/dataTables.responsive.min.js"></script>
+
+	<script type="text/javascript" src="/fluig_trp_utils/resources/js/jquery.mask.min.js"></script>
+
+	<script type="text/javascript" src="/fluig_trp_utils/resources/js/underscore.min.js"></script>
+
+	<script type="text/javascript" src="/fluig_trp_utils/resources/js/fluig_trp_utils.js"></script>
+	<script type="text/javascript" src="app.js"></script>
+
+</body>
+
+</html>

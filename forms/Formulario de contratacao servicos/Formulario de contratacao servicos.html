@@ -1,0 +1,879 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+    <meta name="viewport" content="initial-scale=1.0">
+    <meta charset="utf-8">
+    <link type="text/css" rel="stylesheet" href="/portal/resources/style-guide/css/fluig-style-guide.min.css" />
+    <script type="text/javascript" src="/portal/resources/js/jquery/jquery.js"></script>
+    <script type="text/javascript" src="/portal/resources/js/jquery/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="/portal/resources/js/mustache/mustache-min.js"></script>
+    <script type="text/javascript" src="/portal/resources/style-guide/js/fluig-style-guide.min.js" charset="utf-8">
+    </script>
+
+    <!-- CSS AQUI -->
+    <link rel="stylesheet" type="text/css" href="/fluig_trp_utils/resources/css/fluig_trp_utils.css" />
+
+    <link rel="stylesheet" type="text/css" href="/fluig_trp_utils/resources/css/jquery.dataTables.min.css" />
+    <link rel="stylesheet" type="text/css" href="/fluig_trp_utils/resources/css/responsive.dataTables.min.css" />
+
+    <style>
+        textarea {
+            resize: none;
+        }
+
+        .table_prospecto {
+            /* text-align: center;
+            width: 100%;
+            border: 1px; */
+            overflow: auto;
+            display: block;
+        }
+
+        .table_prospecto thead input {
+            margin-right: 5px !important;
+        }
+
+        .table_prospecto td,
+        .table_prospecto th {
+            border: 1px solid #ddd;
+            padding: 8px !important;
+        }
+
+        .table_prospecto tbody tr:nth-child(even),
+        .cabecalho {
+            background-color: #f2f2f2;
+        }
+
+        .table_prospecto tbody tr:hover {
+            background-color: #ddd;
+        }
+
+        .table_prospecto th {
+            padding-top: 12px;
+            padding-bottom: 12px;
+            /* background-color: #4CAF50; */
+            color: white;
+        }
+
+        .table_prospecto tfoot th {
+            text-align: right !important;
+        }
+
+        .table_prospecto .primeiro {
+            background-color: #FFD700;
+        }
+    </style>
+</head>
+
+<body onload="carregaPagina()">
+    <div class="fluig-style-guide" style="margin-bottom: 100px">
+        <form name="createFormComponents" id="createFormComponents" class="create-form-components" role="form">
+
+            <input type="hidden" id="WKUser" name="WKUser" />
+            <input type="hidden" id="WKMobile" name="WKMobile" />
+            <input type="hidden" id="WKNumState" name="WKNumState" />
+            <input type="hidden" id="WKNumProces" name="WKNumProces" />
+            <input type="hidden" id="MOD_" name="MOD_" />
+            <input type="hidden" id="docId" name="docId" />
+
+            <div class="container-fluid" id="dados" style="padding: 20px;">
+                <ul class="nav nav-tabs" role="tablist">
+                    <li class="active"><a href="#div_dados" role="tab" data-toggle="tab">Dados</a></li>
+                    <li><a href="#div_escopo" role="tab" data-toggle="tab">Escopo do fornecimento</a></li>
+                    <li><a href="#div_carta_convite" role="tab" data-toggle="tab">Carta convite</a></li>
+                    <li><a href="#div_analise_comite" role="tab" data-toggle="tab">Análise Comitê</a></li>
+                    <li><a href="#div_prospecto" role="tab" data-toggle="tab">Prospecto Contratual</a></li>
+                </ul>
+
+                <div class="tab-content">
+                    <div class="tab-pane active" id="div_dados">
+                        <br />
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 form-group">
+                                <label for="area_solicitante">Área solicitante</label>
+                                <input type="text" id="area_solicitante" name="area_solicitante" class="form-control"
+                                    readonly />
+                            </div>
+
+                            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 form-group">
+                                <label for="coordenador_resp">Coordenador responsável</label>
+                                <input type="text" id="coordenador_resp" name="coordenador_resp" class="form-control"
+                                    readonly />
+                            </div>
+                        </div>
+
+                        <br />
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                <div class="form-field table-responsive" data-type="tabledetail" data-show-properties=""
+                                    data-field-name="tabledetail">
+                                    <table class="table" cellspacing="0" tablename="servicos" noaddbutton=true>
+                                        <thead>
+                                            <tr class="tableHeadRow">
+                                                <th class="tableColumn">Descrição resumida</th>
+                                                <th class="tableColumn">Valor estimado</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+                                                    <div class="form-group">
+                                                        <input type="text" name="descricao_resumida"
+                                                            id="descricao_resumida" class="form-control"
+                                                            maxlength="200" />
+                                                    </div>
+                                                </td>
+
+                                                <td class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                                                    <div class="form-group">
+                                                        <input type="text" name="valor_estimado" id="valor_estimado"
+                                                            class="form-control" mask="#00.000.000.000.000,00" />
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <div class="form-group">
+                                    <button type="button" class="btn btn-default" name="adicionar_servicos"
+                                        id="adicionar_servicos"
+                                        onclick="wdkAddChild('servicos');MaskEvent.init();">Adicionar Serviço</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <hr />
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 form-group">
+                                <label for="modalidade_contratacao">Modalidade contratação</label>
+                                <input type="text" id="modalidade_contratacao" name="modalidade_contratacao"
+                                    class="form-control">
+                            </div>
+
+                            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 form-group">
+                                <label for="local_executado">Local a ser executado</label>
+                                <input type="text" id="local_executado" name="local_executado" class="form-control">
+                            </div>
+
+                            <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 form-group">
+                                <label for="duracao_prevista">Duração prevista (em dias)</label>
+                                <input type="number" id="duracao_prevista" name="duracao_prevista" class="form-control"
+                                    min="0" max="9999" value="0">
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 form-group">
+                                <label for="tipo_contrato">Tipo de contrato</label>
+                                <input type="text" id="tipo_contrato" name="tipo_contrato" class="form-control">
+                            </div>
+
+                            <div class="col-xs-12 col-sm-12 col-md-2 col-lg-2 form-group">
+                                <label for="cotar_mercado">Cotar mercado ?</label>
+                                <select name="cotar_mercado" id="cotar_mercado" class="form-control">
+                                    <option value="">Selecione ..</option>
+                                    <option value="nao">Não</option>
+                                    <option value="sim">Sim</option>
+                                </select>
+                            </div>
+
+                            <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7 form-group">
+                                <label for="cotar_mercado_just">Em caso negativo, justifique</label>
+                                <input type="text" id="cotar_mercado_just" name="cotar_mercado_just"
+                                    class="form-control" maxlength="200">
+                            </div>
+                        </div>
+
+                        <br />
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                <div class="form-field table-responsive" data-type="tabledetail" data-show-properties=""
+                                    data-field-name="tabledetail">
+                                    <table class="table" cellspacing="0" tablename="sugestao_forn" noaddbutton=true>
+                                        <thead>
+                                            <tr class="tableHeadRow">
+                                                <th class="tableColumn">Sugestão fornecedores para contratação</th>
+                                                <th class="tableColumn">Contato</th>
+                                                <th class="tableColumn">Telefone</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                                                    <div class="form-group">
+                                                        <select name="fornecedor_selecionado"
+                                                            id="fornecedor_selecionado" class="form-control">
+                                                            <option value="">Fornecedor 1</option>
+                                                            <option value="">Fornecedor 2</option>
+                                                            <option value="">Fornecedor 3</option>
+                                                            <option value="">Fornecedor 4</option>
+                                                            <option value="">Fornecedor 5</option>
+                                                        </select>
+                                                    </div>
+                                                </td>
+
+                                                <td class="col-xs-4 col-sm-2 col-md-2 col-lg-2">
+                                                    <div class="form-group">
+                                                        <input type="text" name="contato_forn" id="contato_forn"
+                                                            class="form-control" />
+                                                    </div>
+                                                </td>
+
+                                                <td class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                                                    <div class="form-group">
+                                                        <input type="text" name="telefone_forn" id="telefone_forn"
+                                                            class="form-control" mask="(00) 00000-0000" />
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <div class="form-group">
+                                    <button type="button" class="btn btn-default" name="adicionar_fornecedor"
+                                        id="adicionar_fornecedor"
+                                        onclick="wdkAddChild('sugestao_forn');MaskEvent.init();">Adicionar
+                                        Fornecedor</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <br />
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 form-group">
+                                <label for="justificativa">Justificativa da necessidade</label>
+                                <textarea name="justificativa" id="justificativa" rows="5"
+                                    class="form-control"></textarea>
+                            </div>
+                        </div>
+
+                        <br />
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                <p><strong>Informações complementares:</strong></p>
+                                <p>a) A aprovação deste documento não libera a execução dos serviços solicitados.</p>
+                                <p>b) A contratação deverá ocorrer de acordo com os procedimentos de contratação
+                                    existentes.
+                                </p>
+                                <p>c) Os serviços serão liberados para início somente após a conclusão do processo de
+                                    compras e assinatura do contrato.</p>
+                                <p>d) Limites de aprovação deste fomulário</p>
+                                <div>
+                                    <p style="margin-left: 40px; width: 185px; display: inline-block;">R$ 0,01 a R$
+                                        5.000,00
+                                    </p>
+                                    <p style="display: inline-block;"> Coordenador responsável</p>
+                                </div>
+
+                                <div>
+                                    <p style=" margin-left: 40px;width: 185px; display: inline-block;">R$ 5.001,00 a R$
+                                        15.000,00
+                                    </p>
+                                    <p style="display: inline-block;"> Gerente da área</p>
+                                </div>
+                                <div>
+                                    <p style=" margin-left: 40px;width: 185px; display: inline-block;">Acima de R$
+                                        15.000,00
+                                    </p>
+                                    <p style="display: inline-block;">Diretoria</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane" id="div_escopo">
+                        <br />
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-12 col-md-2 col-lg-2 form-group">
+                                <label for="data_escopo">Data</label>
+                                <input type="text" id="data_escopo" name="data_escopo" class="form-control" readonly />
+                            </div>
+
+                            <div class="col-xs-12 col-sm-12 col-md-5 col-lg-5 form-group">
+                                <label for="coordenador_resp_escopo">Coordenador Responsável</label>
+                                <input type="text" id="coordenador_resp_escopo" name="coordenador_resp_escopo"
+                                    class="form-control" readonly />
+                            </div>
+
+                            <div class="col-xs-12 col-sm-12 col-md-5 col-lg-5 form-group">
+                                <label for="area_solicitante_escopo">Área solicitante</label>
+                                <input type="text" id="area_solicitante_escopo" name="area_solicitante_escopo"
+                                    class="form-control" readonly />
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 form-group">
+                                <label for="escopo_fornecdimento">Escopo de fornecimento</label>
+                                <textarea name="escopo_fornecdimento" id="escopo_fornecdimento" rows="5"
+                                    class="form-control"></textarea>
+                            </div>
+                        </div>
+
+                        <br />
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                <div class="form-field table-responsive" data-type="tabledetail" data-show-properties=""
+                                    data-field-name="tabledetail">
+                                    <table class="table" cellspacing="0" tablename="materiais" noaddbutton=true>
+                                        <thead>
+                                            <tr class="tableHeadRow">
+                                                <th class="tableColumn">Material a ser utilizado</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                                    <div class="form-group">
+                                                        <input type="text" name="material_utilizado"
+                                                            id="material_utilizado" class="form-control"
+                                                            maxlength="200" />
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <div class="form-group">
+                                    <button type="button" class="btn btn-default" name="adicionar_materiais"
+                                        id="adicionar_materiais"
+                                        onclick="wdkAddChild('materiais');MaskEvent.init();">Adicionar
+                                        Materiais</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <br />
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 form-group">
+                                <label for="tipo_atividade">Tipo da atividade</label>
+                                <input type="text" name="tipo_atividade" id="tipo_atividade" class="form-control"
+                                    value="Novas instalações/Projetos (CAPEX)" />
+                            </div>
+                        </div>
+
+                        <br />
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                <h4 class="fs-no-margin fs-ellipsis fs-full-width">Cronograma</h4>
+                            </div>
+                        </div>
+
+                        <br />
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                <div class="form-field table-responsive" data-type="tabledetail" data-show-properties=""
+                                    data-field-name="tabledetail">
+                                    <table class="table" cellspacing="0" tablename="cronograma" noaddbutton=true>
+                                        <thead>
+                                            <tr class="tableHeadRow">
+                                                <th class="tableColumn">Atividade</th>
+                                                <th class="tableColumn">Inicio</th>
+                                                <th class="tableColumn">Fim</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                                                    <div class="form-group">
+                                                        <input type="text" name="atividade" id="atividade"
+                                                            class="form-control" maxlength="200" />
+                                                    </div>
+                                                </td>
+                                                <td class="col-xs-8 col-sm-2 col-md-2 col-lg-2">
+                                                    <div class="form-group">
+                                                        <input type="text" name="atividade_inicio" id="atividade_inicio"
+                                                            class="form-control" />
+                                                    </div>
+                                                </td>
+                                                <td class="col-xs-8 col-sm-2 col-md-2 col-lg-2">
+                                                    <div class="form-group">
+                                                        <input type="text" name="atividade_fim" id="atividade_fim"
+                                                            class="form-control" />
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <div class="form-group">
+                                    <button type="button" class="btn btn-default" name="adicionar_cronograma"
+                                        id="adicionar_cronograma" onclick="addChildCronograma();">Adicionar
+                                        cronograma</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <br />
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                <label for="qualificacoes">Qualificações</label>
+                                <textarea name="qualificacoes" id="qualificacoes" rows="5"
+                                    class="form-control"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                                <label for="forn_ferramentas">Fornecimento de ferramentas</label>
+                                <select name="forn_ferramentas" id="forn_ferramentas" class="form-control">
+                                    <option value="proprio">Glencane</option>
+                                    <option value="terceiros">Terceiros</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                <label for="regras">Quanto as regras</label>
+                                <textarea name="regras" id="regras" rows="5" class="form-control"></textarea>
+                            </div>
+                        </div>
+
+                        <br>
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 form-group">
+                                <button type="button" class="btn btn-default" name="gerar_pdf_escopo"
+                                    id="gerar_pdf_escopo" onclick="gerarPdfEscopo();">Gerar PDF</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane" id="div_carta_convite">
+                        <br />
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-12 col-md-5 col-lg-5 form-group">
+                                <label for="area_solicitante_selec_forn">Área Solicitante</label>
+                                <input type="text" name="area_solicitante_selec_forn" id="area_solicitante_selec_forn"
+                                    class="form-control" readonly />
+                            </div>
+                            <div class="col-xs-12 col-sm-12 col-md-5 col-lg-5 form-group">
+                                <label for="responsavel_tec">Responsável técnico</label>
+                                <input type="text" name="responsavel_tec" id="responsavel_tec" class="form-control" />
+                            </div>
+                            <div class="col-xs-12 col-sm-12 col-md-2 col-lg-2 form-group">
+                                <label for="documento">Nº Documento</label>
+                                <input type="text" name="documento" id="documento" class="form-control" />
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 form-group">
+                                <label for="descritivo">Breve descritivo do serviço a ser contratado</label>
+                                <textarea name="descritivo" id="descritivo" class="form-control" rows="3"></textarea>
+                            </div>
+                        </div>
+
+                        <br />
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                <div class="form-field table-responsive" data-type="tabledetail" data-show-properties=""
+                                    data-field-name="tabledetail">
+                                    <table class="table" cellspacing="0" tablename="selecao_forn" noaddbutton=true>
+                                        <thead>
+                                            <tr class="tableHeadRow">
+                                                <th class="tableColumn">Seleção dos fornecedores</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                                    <div class="form-group">
+                                                        <select name="fornecedor_sug" id="fornecedor_sug"
+                                                            class="form-control">
+                                                            <option value="">Fornecedor 1</option>
+                                                            <option value="">Fornecedor 2</option>
+                                                            <option value="">Fornecedor 3</option>
+                                                            <option value="">Fornecedor 4</option>
+                                                            <option value="">Fornecedor 5</option>
+                                                        </select>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <div class="form-group">
+                                    <button type="button" class="btn btn-default" name="adicionar_selecao_fornecedor"
+                                        id="adicionar_selecao_fornecedor"
+                                        onclick="wdkAddChild('selecao_forn');">Adicionar
+                                        Fornecedor</button>
+
+                                    <!-- <button type="button" class="btn btn-default" name="enviar_email" id="enviar_email"
+                                        onclick="enviarEmailFornecedores();">Enviar E-mail</button> -->
+                                </div>
+                            </div>
+                        </div>
+
+                        <br>
+                    </div>
+
+                    <div class="tab-pane" id="div_analise_comite">
+                        <br />
+                        <div class="row">
+                            <div class="form-group col-md-3">
+                                <div class="row">
+                                    <div class="form-group col-md-12">
+                                        <label for="nome">Upload</label>
+                                        <input type="file" class="btn btn-primary btn-sm" id="files_outros"
+                                            name="filfiles_outroses" title="Envie outros arquivos"
+                                            data-url="/ecm/upload" multiple>
+                                    </div>
+                                    <div class="form-group col-md-12">
+                                        <p class="text-gray-medium" style="font-size: 12px;">Selecione os arquivos e
+                                            clique em reconhecer para gerar a análise do comitê.</p>
+                                        <button type="button" class="btn btn-default">Reconhecer </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-9">
+                                <div class="row">
+                                    <div class="form-group col-md-12" id="rowImagens">
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                <div class="thumbnail">
+                                                    <img src="/style-guide/images/illustrations/builder.svg">
+                                                    <div class="caption">
+                                                        <div id="nomeanexo_fileid">Proposta Leão Construtora</div>
+                                                        <div>
+                                                            <input type="checkbox" class="bigcheckbox"
+                                                                name="reconhecer" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <div class="thumbnail">
+                                                    <img src="/style-guide/images/illustrations/builder.svg">
+                                                    <div class="caption">
+                                                        <div id="nomeanexo_fileid">Proposta Construliz</div>
+                                                        <div>
+                                                            <input type="checkbox" class="bigcheckbox"
+                                                                name="reconhecer2" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <br />
+
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                <table class="table_prospecto">
+                                    <thead>
+                                        <tr>
+                                            <th></th>
+                                            <th colspan="2" class="cabecalho">Fornecedor</th>
+                                            <th colspan="3" class="cabecalho primeiro">
+                                                <div><input type="radio" name="forn_contratado">
+                                                    Leão Construtora</div>
+                                            </th>
+                                            <th colspan="3" class="cabecalho">
+                                                <div><input type="radio" name="forn_contratado">Construliz</div>
+                                            </th>
+                                            <th colspan="3" class="cabecalho">
+                                                <div><input type="radio" name="forn_contratado">Sanches & Aquino</div>
+                                            </th>
+                                            <th colspan="3" class="cabecalho">
+                                                <div><input type="radio" name="forn_contratado">Fornecedor 1</div>
+                                            </th>
+                                            <th colspan="3" class="cabecalho">
+                                                <div><input type="radio" name="forn_contratado">Fornecedor 2</div>
+                                            </th>
+                                            <th colspan="3" class="cabecalho">
+                                                <div><input type="radio" name="forn_contratado">Fornecedor 3</div>
+                                            </th>
+                                        </tr>
+                                        <tr>
+                                            <th></th>
+                                            <th colspan="2">Contato</th>
+                                            <th colspan="3" class="primeiro">Luiz Ulian</th>
+                                            <th colspan="3">Orlando</th>
+                                            <th colspan="3">Cleiton</th>
+                                            <th colspan="3">Contato 1</th>
+                                            <th colspan="3">Contato 2</th>
+                                            <th colspan="3">Contato 3</th>
+                                        </tr>
+                                        <tr>
+                                            <th></th>
+                                            <th colspan="2">Telefone</th>
+                                            <th colspan="3" class="primeiro">(18) 99791-2141</th>
+                                            <th colspan="3">(18) 3502-3210</th>
+                                            <th colspan="3">(18) 99746-9597</th>
+                                            <th colspan="3">(18) 99999-9999</th>
+                                            <th colspan="3">(18) 99999-9999</th>
+                                            <th colspan="3">(18) 99999-9999</th>
+                                        </tr>
+                                        <tr class="cabecalho">
+                                            <th>Descrição dos produtos</th>
+                                            <th>Qtde</th>
+                                            <th>Orçamento</th>
+                                            <th class="primeiro">Valor inicial</th>
+                                            <th class="primeiro">Desconto</th>
+                                            <th class="primeiro">Valor final</th>
+                                            <th>Valor inicial</th>
+                                            <th>Desconto</th>
+                                            <th>Valor final</th>
+                                            <th>Valor inicial</th>
+                                            <th>Desconto</th>
+                                            <th>Valor final</th>
+                                            <th>Valor inicial</th>
+                                            <th>Desconto</th>
+                                            <th>Valor final</th>
+                                            <th>Valor inicial</th>
+                                            <th>Desconto</th>
+                                            <th>Valor final</th>
+                                            <th>Valor inicial</th>
+                                            <th>Desconto</th>
+                                            <th>Valor final</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td style="width: 350px !important; display: block;">Empreitada Global para
+                                                Construção de
+                                                Base Civil para a torre de
+                                                Resfriamento (UTE-3)</td>
+                                            <td>1</td>
+                                            <td></td>
+                                            <td class="primeiro">236.707,00</td>
+                                            <td class="primeiro"><input type="text" name="desc_0" class="form-control"
+                                                    value="6.707,00" style="width: 100px;" />
+                                            </td>
+                                            <td class="primeiro">230.000,00</td>
+                                            <td>520.102,00</td>
+                                            <td><input type="text" name="desc_1" class="form-control" value="0,00"
+                                                    style="width: 100px;" />
+                                            </td>
+                                            <td>520.102,00</td>
+                                            <td></td>
+                                            <td></td>
+                                            <td>999.999,99</td>
+                                            <td><input type="text" name="desc_2" class="form-control" value="99.999,99"
+                                                    style="width: 100px;" /></td>
+                                            <td>900.000,00</td>
+                                            <td>999.999,99</td>
+                                            <td><input type="text" name="desc_3" class="form-control" value="99.999,99"
+                                                    style="width: 100px;" /></td>
+                                            <td>900.000,00</td>
+                                            <td>999.999,99</td>
+                                            <td><input type="text" name="desc_4" class="form-control" value="99.999,99"
+                                                    style="width: 100px;" /></td>
+                                            <td>900.000,00</td>
+                                        </tr>
+                                        </tr>
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <th colspan="3" class="cabecalho">Situação</th>
+                                            <th colspan="3" class="cabecalho primeiro"></th>
+                                            <th colspan="3" class="cabecalho"></th>
+                                            <th colspan="3" class="cabecalho">Declinou</th>
+                                            <th colspan="3" class="cabecalho"></th>
+                                            <th colspan="3" class="cabecalho"></th>
+                                            <th colspan="3" class="cabecalho"></th>
+                                        </tr>
+
+                                        <tr>
+                                            <th colspan="3">Total Bruto</th>
+                                            <th colspan="3" class="primeiro">236.707,00</th>
+                                            <th colspan="3">520.102,00</th>
+                                            <th colspan="3"></th>
+                                            <th colspan="3">999.999,99</th>
+                                            <th colspan="3">999.999,99</th>
+                                            <th colspan="3">999.999,99</th>
+                                        </tr>
+
+                                        <tr>
+                                            <th colspan="3">Desconto</th>
+                                            <th colspan="3" class="primeiro">6.707,00</th>
+                                            <th colspan="3"></th>
+                                            <th colspan="3"></th>
+                                            <th colspan="3">99.999,99</th>
+                                            <th colspan="3">99.999,99</th>
+                                            <th colspan="3">99.999,99</th>
+                                        </tr>
+
+                                        <tr>
+                                            <th colspan="3">Líquido</th>
+                                            <th colspan="3" class="primeiro">230.000,00</th>
+                                            <th colspan="3">520.102,00</th>
+                                            <th colspan="3"></th>
+                                            <th colspan="3">900.000,00</th>
+                                            <th colspan="3">900.000,00</th>
+                                            <th colspan="3">900.000,00</th>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane" id="div_prospecto">
+                        <br />
+                        <div class="row">
+                            <div class="form-group col-md-3">
+                                <div class="row">
+                                    <div class="form-group col-md-12">
+                                        <label for="nome">Upload</label>
+                                        <input type="file" class="btn btn-primary btn-sm" id="files_juridico"
+                                            name="files_juridico" title="Envie outros arquivos" data-url="/ecm/upload"
+                                            multiple>
+                                    </div>
+                                    <!-- <div class="form-group col-md-12">
+                                        <p class="text-gray-medium" style="font-size: 12px;">Selecione os arquivos e
+                                            clique em reconhecer para gerar a análise do comitê.</p>
+                                        <button type="button" class="btn btn-default">Reconhecer </button>
+                                        <button type="button" class="btn btn-default"
+                                            onclick="FileUpload.downloadAll();">Baixar
+                                            todos</button>
+                                    </div> -->
+                                </div>
+                            </div>
+                            <div class="form-group col-md-9">
+                                <div class="row">
+                                    <div class="form-group col-md-12" id="rowImagens">
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                <div class="thumbnail">
+                                                    <img src="/style-guide/images/illustrations/builder.svg">
+                                                    <div class="caption">
+                                                        <div id="nomeanexo_fileid">Minuta jurídica</div>
+                                                        <!-- <div>
+                                                            <input type="checkbox" class="bigcheckbox"
+                                                                name="reconhecer" />
+                                                            <a href="#" class="btn btn-default btn-xs"
+                                                                role="button">Ler</a>
+                                                        </div> -->
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <br />
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 form-group">
+                                <label for="unidade_contratante">Unidade contratante</label>
+                                <input type="text" id="unidade_contratante" name="unidade_contratante"
+                                    class="form-control" />
+                            </div>
+
+                            <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 form-group">
+                                <label for="contratado">Contratado(a)</label>
+                                <input type="text" id="contratado" name="contratado" class="form-control" readonly />
+                            </div>
+
+                            <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 form-group">
+                                <label for="telefone_prospecto">Telefone</label>
+                                <input type="text" id="telefone_prospecto" name="telefone_prospecto"
+                                    class="form-control" readonly />
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 form-group">
+                                <label for="endereco">Endereço completo</label>
+                                <input type="text" id="endereco" name="endereco" class="form-control" readonly />
+                            </div>
+
+                            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 form-group">
+                                <label for="email_propecto">Email</label>
+                                <input type="text" id="email_propecto" name="email_propecto" class="form-control"
+                                    readonly />
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 form-group">
+                                <label for="responsavel">Responsável legal</label>
+                                <input type="text" id="responsavel" name="responsavel" class="form-control" />
+                            </div>
+
+                            <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 form-group">
+                                <label for="cpf">CPF</label>
+                                <input type="text" id="cpf" name="cpf" class="form-control" mask="000.000.000-00" />
+                            </div>
+
+                            <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 form-group">
+                                <label for="rg">RG</label>
+                                <input type="text" id="rg" name="rg" class="form-control" mask="00.000.000-00" />
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 form-group">
+                                <label for="socio_repres_legal">Sócio/Representante legal</label>
+                                <input type="text" id="socio_repres_legal" name="socio_repres_legal"
+                                    class="form-control" />
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 form-group">
+                                <label for="objeto_objetivo">Objeto/Objetivo</label>
+                                <textarea id="objeto_objetivo" name="objeto_objetivo" rows="3"
+                                    class="form-control"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 form-group">
+                                <label for="vigencia">Vigência</label>
+                                <textarea id="vigencia" name="vigencia" rows="3" class="form-control"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 form-group">
+                                <label for="forma_prorrog_resci">Forma de prorrogação/rescisão</label>
+                                <textarea id="forma_prorrog_resci" name="forma_prorrog_resci" rows="3"
+                                    class="form-control"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 form-group">
+                                <label for="vlr_total_pgto">Valor total/Forma de pagamento</label>
+                                <textarea id="vlr_total_pgto" name="vlr_total_pgto" rows="3"
+                                    class="form-control"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <!-- JS AQUI -->
+    <script type="text/javascript" src="/webdesk/vcXMLRPC.js"></script>
+
+    <script type="text/javascript" src="/fluig_trp_utils/resources/js/autoNumeric.js"></script>
+
+    <script type="text/javascript" src="/fluig_trp_utils/resources/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="/fluig_trp_utils/resources/js/dataTables.responsive.min.js"></script>
+
+    <script type="text/javascript" src="/fluig_trp_utils/resources/js/jquery.mask.min.js"></script>
+
+    <script type="text/javascript" src="/fluig_trp_utils/resources/js/underscore.min.js"></script>
+
+    <script type="text/javascript" src="/fluig_trp_utils/resources/js/fluig_trp_utils.js"></script>
+    <script type="text/javascript" src="app.js"></script>
+
+</body>
+
+</html>

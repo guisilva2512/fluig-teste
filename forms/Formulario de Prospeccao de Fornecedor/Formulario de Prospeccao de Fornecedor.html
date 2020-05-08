@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+	<meta name="viewport" content="initial-scale=1.0">
+	<meta charset="utf-8">
+	<link type="text/css" rel="stylesheet" href="/portal/resources/style-guide/css/fluig-style-guide.min.css" />
+	<script type="text/javascript" src="/portal/resources/js/jquery/jquery.js"></script>
+	<script type="text/javascript" src="/portal/resources/js/jquery/jquery-ui.min.js"></script>
+	<script type="text/javascript" src="/portal/resources/js/mustache/mustache-min.js"></script>
+	<script type="text/javascript" src="/portal/resources/style-guide/js/fluig-style-guide.min.js"
+		charset="utf-8"></script>
+
+	<!-- CSS AQUI -->
+	<link rel="stylesheet" type="text/css" href="/fluig_trp_utils/resources/css/fluig_trp_utils.css" />
+
+	<link rel="stylesheet" type="text/css" href="/fluig_trp_utils/resources/css/jquery.dataTables.min.css" />
+	<link rel="stylesheet" type="text/css" href="/fluig_trp_utils/resources/css/responsive.dataTables.min.css" />
+
+</head>
+
+<body onload="carregaPagina()">
+	<div class="fluig-style-guide" style="margin-bottom: 100px">
+		<form name="createFormComponents" id="createFormComponents" class="create-form-components" role="form">
+
+			<input type="hidden" id="WKUser" name="WKUser" />
+			<input type="hidden" id="WKMobile" name="WKMobile" />
+			<input type="hidden" id="WKNumState" name="WKNumState" />
+			<input type="hidden" id="WKNumProces" name="WKNumProces" />
+			<input type="hidden" id="_MOD" name="_MOD" />
+			<input type="hidden" id="docId" name="docId" />
+
+			<div class="container-fluid" id="dados">
+				<div class="row">
+					<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 form-group">
+						<label for="uf">Estado</label>
+						<select name="uf" id="uf" class="form-control">
+							<option value="">Selecione</option>
+							<option value="AC">Acre</option>
+							<option value="AL">Alagoas</option>
+							<option value="AP">Amapá</option>
+							<option value="AM">Amazonas</option>
+							<option value="BA">Bahia</option>
+							<option value="CE">Ceará</option>
+							<option value="DF">Distrito Federal</option>
+							<option value="ES">Espirito Santo</option>
+							<option value="GO">Goiás</option>
+							<option value="MA">Maranhão</option>
+							<option value="MS">Mato Grosso do Sul</option>
+							<option value="MT">Mato Grosso</option>
+							<option value="MG">Minas Gerais</option>
+							<option value="PA">Pará</option>
+							<option value="PB">Paraíba</option>
+							<option value="PR">Paraná</option>
+							<option value="PE">Pernambuco</option>
+							<option value="PI">Piauí</option>
+							<option value="RJ">Rio de Janeiro</option>
+							<option value="RN">Rio Grande do Norte</option>
+							<option value="RS">Rio Grande do Sul</option>
+							<option value="RO">Rondônia</option>
+							<option value="RR">Roraima</option>
+							<option value="SC">Santa Catarina</option>
+							<option value="SP">São Paulo</option>
+							<option value="SE">Sergipe</option>
+							<option value="TO">Tocantins</option>
+						</select>
+					</div>
+					<div class="col-xs-12 col-sm-5 col-md-5 col-lg-5 form-group">
+						<label for="cidade">Cidade</label>
+						<input type="text" name="cidade" id="cidade" class="form-control" />
+					</div>
+					<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 form-group">
+						<label for="especialidade">Especialidade</label>
+						<input type="text" name="especialidade" id="especialidade" class="form-control" />
+					</div>
+					<div class="col-xs-12 col-sm-1 col-md-1 col-lg-1 form-group">
+						<button class="btn btn-default" style="margin-top: 25px;" id="pesquisar">Pesquisar</button>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+						<table id="tblFornecedor" class="display cell-border nowrap"  style="width: 100%">
+							<thead>
+								<tr>
+									<th>Razão Social</th>
+									<th>Nome Fantasia</th>
+									<th>CNPJ</th>
+									<th>Telefone</th>
+									<th>Celular</th>
+								</tr>
+							</thead>
+						</table>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+
+	<!-- JS AQUI -->
+	<script type="text/javascript" src="/webdesk/vcXMLRPC.js"></script>
+
+	<script type="text/javascript" src="/fluig_trp_utils/resources/js/autoNumeric.js"></script>
+
+	<script type="text/javascript" src="/fluig_trp_utils/resources/js/jquery.dataTables.min.js"></script>
+	<script type="text/javascript" src="/fluig_trp_utils/resources/js/dataTables.responsive.min.js"></script>
+
+	<script type="text/javascript" src="/fluig_trp_utils/resources/js/jquery.mask.min.js"></script>
+
+	<script type="text/javascript" src="/fluig_trp_utils/resources/js/underscore.min.js"></script>
+
+	<script type="text/javascript" src="/fluig_trp_utils/resources/js/fluig_trp_utils.js"></script>
+	<script type="text/javascript" src="app.js"></script>
+
+</body>
+
+</html>

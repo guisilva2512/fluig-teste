@@ -1,0 +1,47 @@
+table {
+    /* text-align: center;
+    width: 100%;
+    border: 1px; */
+    overflow: auto;
+    display: block;
+}
+
+table {
+    width: 100%;
+    table-layout: fixed;
+    overflow-wrap: break-word;
+}
+
+table thead input {
+    margin-right: 5px !important;
+}
+
+table td,
+table th {
+    border: 1px solid #ddd;
+    padding: 8px !important;
+}
+
+table tbody tr:nth-child(even),
+table thead tr {
+    background-color: #f2f2f2;
+}
+
+table tbody tr:hover {
+    background-color: #ddd;
+}
+
+table th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    /* background-color: #4CAF50; */
+    color: white;
+}
+
+table tfoot th {
+    text-align: right !important;
+}
+
+table .primeiro {
+    background-color: #FFD700;
+}
